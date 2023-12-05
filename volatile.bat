@@ -15,33 +15,42 @@ if 1%month% lss 100 set month=0%month%
 set "formatted_date=%day%%month%%year%"
 
 REM Create the output file with the formatted date
-echo %date% %time% > liveIR-%formatted_date%.txt
-echo General system information: >> liveIR-%formatted_date%.txt
-systeminfo >> liveIR-%formatted_date%.txt
-echo Running Tasks: >> liveIR-%formatted_date%.txt
-tasklist >> liveIR-%formatted_date%.txt
-echo Running Tasks m >> liveIR-%formatted_date%.txt
-tasklist /m >> liveIR-%formatted_date%.txt
-echo Running tasks svc >> liveIR-%formatted_date%.txt
-tasklist /svc >> liveIR-%formatted_date%.txt
-echo Available network connections >> liveIR-%formatted_date%.txt
-netstat -nao >> liveIR-%formatted_date%.txt
-echo MAC Addresses in ARP Cache >> liveIR-%formatted_date%.txt
-arp -a >> liveIR-%formatted_date%.txt
-echo Network configuration >> liveIR-%formatted_date%.txt
-ipconfig /all >> liveIR-%formatted_date%.txt
-echo DNS >> liveIR-%formatted_date%.txt
-ipconfig /displaydns >> liveIR-%formatted_date%.txt
-echo Routing Configurations >> liveIR-%formatted_date%.txt
-route print >> liveIR-%formatted_date%.txt
-echo System Variables >> liveIR-%formatted_date%.txt
-set >> liveIR-%formatted_date%.txt
-echo User Information >> liveIR-%formatted_date%.txt
-net user %username% >> liveIR-%formatted_date%.txt
-net use >> liveIR-%formatted_date%.txt
-echo Network Shares >> liveIR-%formatted_date%.txt
-net share >> liveIR-%formatted_date%.txt
-echo General Workstation Information >> liveIR-%formatted_date%.txt
-net config workstation >> liveIR-%formatted_date%.txt
+set "baseFileName=liveIR-%formatted_date%"
+set "outputFile=%baseFileName%.txt"
+set "counter=1"
 
-echo Script execution completed.
+REM Check if the file already exists and append a sequential number if necessary
+while exist "%outputFile%" (
+    set "outputFile=%baseFileName%_%counter%.txt"
+    set /a "counter+=1"
+)
+
+echo %date% %time% > "%outputFile%"
+echo General system information: >> "%outputFile%"
+systeminfo >> "%outputFile%"
+echo Running Tasks: >> "%outputFile%"
+tasklist >> "%outputFile%"
+echo Running Tasks m >> "%outputFile%"
+tasklist /m >> "%outputFile%"
+echo Running tasks svc >> "%outputFile%"
+tasklist /svc >> "%outputFile%"
+echo Available network connections >> "%outputFile%"
+netstat -nao >> "%outputFile%"
+echo MAC Addresses in ARP Cache >> "%outputFile%"
+arp -a >> "%outputFile%"
+echo Network configuration >> "%outputFile%"
+ipconfig /all >> "%outputFile%"
+echo DNS >> "%outputFile%"
+ipconfig /displaydns >> "%outputFile%"
+echo Routing Configurations >> "%outputFile%"
+route print >> "%outputFile%"
+echo System Variables >> "%outputFile%"
+set >> "%outputFile%"
+echo User Information >> "%outputFile%"
+net user %username% >> "%outputFile%"
+net use >> "%outputFile%"
+echo Network Shares >> "%outputFile%"
+net share >> "%outputFile%"
+echo General Workstation Information >> "%outputFile%"
+
+echo Script execution completed. Output saved to "%outputFile%".

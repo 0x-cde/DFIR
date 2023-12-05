@@ -1,7 +1,7 @@
 # DFIR
 Here you may find a set of tools that will assist you with the DFIR process.
 
-##volatile.bat:
+## volatile.bat:
 Automated tool for volatile data collection. Collects the following data and stores them in a txt:
 1. date and time of the system.
 2. snapshot of the currently running tasks.
